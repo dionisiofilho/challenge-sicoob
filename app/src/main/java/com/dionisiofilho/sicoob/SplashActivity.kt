@@ -23,7 +23,7 @@ class SplashActivity : BaseActivity() {
 
     private fun init() {
         val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+        startActivityWithAnimation(intent)
+        finishWithSlideAnimation()
     }
 }

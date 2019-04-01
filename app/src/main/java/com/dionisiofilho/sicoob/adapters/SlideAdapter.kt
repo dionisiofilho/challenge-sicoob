@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 
-class SlideAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+class SlideAdapter(fragmentManager: FragmentManager?) : FragmentPagerAdapter(fragmentManager) {
 
     private val urlImages = arrayListOf<String>()
 

@@ -1,74 +1,70 @@
 package com.dionisiofilho.sicoob.main
 
 import android.os.Bundle
-import android.os.Handler
-import android.support.v4.view.ViewPager
+import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.FragmentTransaction
+import android.view.MenuItem
+import android.widget.FrameLayout
 import com.dionisiofilho.sicoob.R
-import com.dionisiofilho.sicoob.adapters.SlideAdapter
 import com.dionisiofilho.sicoob.application.bases.BaseActivity
-import java.util.*
-
-class MainActivity : BaseActivity() {
-
-    private lateinit var viewPagerMain: ViewPager
+import com.dionisiofilho.sicoob.application.bases.BaseFragment
+import com.dionisiofilho.sicoob.main.fragments.HomeFragment
 
 
-    private val slideAdapter: SlideAdapter by lazy {
-        SlideAdapter(supportFragmentManager)
-    }
+class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
+    private lateinit var frameLayout: FrameLayout
+    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var homeFragment: HomeFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        initViews()
 
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        initViews()
-        convigureViewPager()
+        initFragments()
+        startFragment(homeFragment)
     }
 
-    private fun convigureViewPager() {
+    private fun initFragments() {
+        homeFragment = HomeFragment()
+    }
 
-        val urlImage = "http://api-hom.contactcloud.dionisiofilho.com/images/icon_new.png"
-
-        slideAdapter.addUrl(urlImage)
-        slideAdapter.addUrl(urlImage)
-        slideAdapter.addUrl(urlImage)
-        slideAdapter.addUrl(urlImage)
-        slideAdapter.addUrl(urlImage)
-
-        viewPagerMain.adapter = slideAdapter
-
-        var currentPage = 0
-        val handler = Handler()
-
-        val runnable = Runnable {
-            if (currentPage == slideAdapter.count) {
-                currentPage = 0
+    private fun startFragment(fragment: BaseFragment) {
+        if (!fragment.isVisible) {
+            supportFragmentManager.beginTransaction().apply {
+                replace(frameLayout.id, fragment, fragment::class.java.simpleName)
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                commit()
             }
-            viewPagerMain.setCurrentItem(currentPage++, true)
-        }
-
-        Timer().apply {
-            schedule(object : TimerTask() {
-                override fun run() {
-                    handler.post(runnable)
-                }
-
-            }, 3000, 3000)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
 
     private fun initViews() {
-        viewPagerMain = findViewById(R.id.vp_slide)
+        frameLayout = findViewById(R.id.fl_main)
+        bottomNavigationView = findViewById(R.id.bnv_main)
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(this)
+    }
+
+
+    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
+
+        when (menuItem.itemId) {
+
+            R.id.act_home -> {
+                startFragment(homeFragment)
+                return true
+            }
+
+        }
+
+        return false
+
     }
 }
