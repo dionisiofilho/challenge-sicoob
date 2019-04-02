@@ -29,7 +29,7 @@ class BaseConnectionService {
             }
 
             return Retrofit.Builder()
-                    .baseUrl(BuildConfig.BaseURLMovie)
+                    .baseUrl(BuildConfig.BaseURLAPI)
                     .addConverterFactory(JacksonConverterFactory.create())
                     .client(client.build())
                     .build()

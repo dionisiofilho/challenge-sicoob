@@ -28,7 +28,7 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.ItemGenreViewHolder>() {
         holder.genre.text = genre.name
     }
 
-    fun addAll(genres: ArrayList<Genre>) {
+    fun addAll(genres: List<Genre>) {
         this.genres.clear()
         this.genres.addAll(genres)
         notifyDataSetChanged()

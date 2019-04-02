@@ -111,6 +111,7 @@
             android:id="@+id/tv_release_date_movie"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dimen_6dp"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_14sp"
             app:layout_constraintLeft_toLeftOf="@+id/tv_runtime_movie"

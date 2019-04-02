@@ -5,6 +5,6 @@ import com.dionisiofilho.sicoob.model.Movie
 
 interface IMovie : BaseView {
 
-    fun onSuccesGetMovie(movies: ArrayList<Movie>)
+    fun onSuccesGetMovie(movies: List<Movie>)
     fun onSuccessGetDetailsMovie(movie: Movie)
 }

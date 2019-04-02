@@ -15,4 +15,8 @@
     <string name="note">Nota</string>
     <string name="note_query">%s /10</string>
     <string name="release_date">Dt. Lançamento</string>
+    <string name="error_share_movie">Não foi possível compartilhar</string>
+    <string name="favorite_success">Adicionado como favorito</string>
+    <string name="favorite_fail">Não foi possível completar a solicitação</string>
+    <string name="favorite_delete_success">Removido dos favoritos</string>
 </resources>

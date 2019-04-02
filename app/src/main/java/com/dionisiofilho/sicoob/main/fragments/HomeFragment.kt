@@ -22,6 +22,7 @@ import java.util.*
 
 class HomeFragment : BaseFragment(), IMovie {
 
+    private var loading: Boolean = true
     private lateinit var viewPagerMain: ViewPager
     private lateinit var recyclerViewMovie: RecyclerView
 
@@ -73,7 +74,10 @@ class HomeFragment : BaseFragment(), IMovie {
                     val pastPossibleItem = gridLayoutManager.findFirstVisibleItemPosition() + 10
 
                     if ((visibleItemCount + pastPossibleItem) >= (totalItemCount)) {
-                        getMovies()
+                        if (loading) {
+                            loading = false
+                            getMovies()
+                        }
                     }
                 }
             }
@@ -86,7 +90,7 @@ class HomeFragment : BaseFragment(), IMovie {
 
     private fun onClickMovieAdapter(movie: Movie) {
         val intentDetail = Intent(requireContext(), MovieDetailActivity::class.java)
-        intentDetail.putExtra(MovieDetailActivity.idMovie, movie.id)
+        intentDetail.putExtra(MovieDetailActivity.IDMovie, movie.id)
         startActivityWithAnimation(intentDetail)
     }
 
@@ -122,14 +126,10 @@ class HomeFragment : BaseFragment(), IMovie {
         }
     }
 
-    override fun onSuccesGetMovie(movies: ArrayList<Movie>) {
 
-        if (page == 1) {
-            movieAdapter.addMovies(movies)
-        } else {
-            movieAdapter.addMovies(movies, false)
-
-        }
+    override fun onSuccesGetMovie(movies: List<Movie>) {
+        movieAdapter.addMovies(movies, page == 1)
+        loading = !(movies.isEmpty() && this.page != 0)
         this.page++
     }
 

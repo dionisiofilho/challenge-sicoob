@@ -3,8 +3,7 @@ package com.dionisiofilho.sicoob.model
 import com.dionisiofilho.sicoob.application.bases.BaseModel
 import com.fasterxml.jackson.annotation.JsonProperty
 
-class MovieResponse : BaseModel() {
-
+class MovieResponse() : BaseModel() {
     @JsonProperty("page")
     val page: Int = 0
 
@@ -16,6 +15,5 @@ class MovieResponse : BaseModel() {
 
     @JsonProperty("results")
     val movies: ArrayList<Movie> = arrayListOf()
-
 
 }

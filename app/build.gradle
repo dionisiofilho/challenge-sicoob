@@ -1,10 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 def APP_NAME = "Sicoob"
 def compat_version = "27.1.1"
 def retrofit_version = '2.3.0'
+def archRoomVersion = '1.1.1'
 
 android {
     compileSdkVersion 28
@@ -40,8 +42,9 @@ android {
             resValue "string", "app_name", APP_NAME + " DEV"
             manifestPlaceholders = [applicationLabel: APP_NAME + " DEV"]
             buildConfigField "String", "ApiKey", "\"9dd8120f0d5021ea02e340492f2137f6\""
-            buildConfigField "String", "BaseURLMovie", "\"https://api.themoviedb.org/3/movie/\""
+            buildConfigField "String", "BaseURLAPI", "\"https://api.themoviedb.org/3/movie/\""
             buildConfigField "String", "BaseURLImage", "\"https://image.tmdb.org/t/p/\""
+            buildConfigField "String", "BaseURLMovie", "\"https://www.themoviedb.org/movie/\""
             dimension "default"
         }
     }
@@ -72,9 +75,17 @@ android {
         //Glide
         implementation 'com.github.bumptech.glide:glide:4.7.1'
 
+        //RoomDatabase
+        implementation "android.arch.persistence.room:runtime:$archRoomVersion"
+        kapt "android.arch.persistence.room:compiler:$archRoomVersion"
+
 
         testImplementation 'junit:junit:4.12'
         androidTestImplementation 'com.android.support.test:runner:1.0.2'
         androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     }
+}
+
+dependencies {
+    implementation 'com.android.support:support-v4:28.+'
 }

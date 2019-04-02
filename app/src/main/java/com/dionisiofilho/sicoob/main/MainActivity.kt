@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import com.dionisiofilho.sicoob.R
 import com.dionisiofilho.sicoob.application.bases.BaseActivity
 import com.dionisiofilho.sicoob.application.bases.BaseFragment
+import com.dionisiofilho.sicoob.main.fragments.FavoriteFragment
 import com.dionisiofilho.sicoob.main.fragments.HomeFragment
 
 
@@ -16,6 +17,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private lateinit var frameLayout: FrameLayout
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var homeFragment: HomeFragment
+    private lateinit var favoriteFragment: FavoriteFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     private fun initFragments() {
         homeFragment = HomeFragment()
+        favoriteFragment = FavoriteFragment()
     }
 
     private fun startFragment(fragment: BaseFragment) {
@@ -59,6 +62,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
             R.id.act_home -> {
                 startFragment(homeFragment)
+                return true
+            }
+
+            R.id.act_favorite -> {
+                startFragment(favoriteFragment)
                 return true
             }
 
