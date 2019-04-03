@@ -71,5 +71,8 @@ class FavoriteFragment : BaseFragment(), IMovie {
     override fun onSuccessGetDetailsMovie(movie: Movie) {
     }
 
+    override fun onSuccessSearchMovie(movies: List<Movie>) {
+    }
+
 
 }

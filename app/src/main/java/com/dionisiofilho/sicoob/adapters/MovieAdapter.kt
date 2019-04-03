@@ -38,10 +38,6 @@ class MovieAdapter(val onClickMovie: (movie: Movie) -> Unit) : RecyclerView.Adap
 
     }
 
-    private fun clearLayoutImage(imageMovie: ImageView) {
-        imageMovie.setImageDrawable(null)
-    }
-
     fun addMovies(movies: List<Movie>, clear: Boolean = true) {
 
         if (clear) {
@@ -51,17 +47,9 @@ class MovieAdapter(val onClickMovie: (movie: Movie) -> Unit) : RecyclerView.Adap
         this.movies.addAll(movies)
         notifyDataSetChanged()
 
-
     }
-
-    fun clear() {
-        this.movies.clear()
-        notifyDataSetChanged()
-    }
-
 
     inner class ItemMovideViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val imageMovie: ImageView = view.findViewById(R.id.iv_movie_adapter)
     }
 }

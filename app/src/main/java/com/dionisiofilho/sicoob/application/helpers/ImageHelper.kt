@@ -12,7 +12,7 @@ class ImageHelper {
     companion object {
 
         fun getImageFromImageView(@NotNull urlImage: String, @NotNull imageView: ImageView) {
-            Glide.with(getAppContext()).load(BuildConfig.BaseURLImage + urlImage).into(imageView)
+            Glide.with(getAppContext()).load(urlImage).into(imageView)
         }
 
         fun getImageFromMovie(@NotNull urlImage: String, @NotNull imageView: ImageView, imageSize: ImageSize = ImageSize.W185) {

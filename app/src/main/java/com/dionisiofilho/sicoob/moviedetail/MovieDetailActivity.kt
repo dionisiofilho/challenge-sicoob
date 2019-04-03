@@ -224,6 +224,10 @@ class MovieDetailActivity : BaseActivity(), IMovie {
     override fun onSuccesGetMovie(movies: List<Movie>) {
     }
 
+    override fun onSuccessSearchMovie(movies: List<Movie>) {
+
+    }
+    
     override fun onSuccessGetDetailsMovie(movie: Movie) {
         this.movie = movie
         loading.hide()

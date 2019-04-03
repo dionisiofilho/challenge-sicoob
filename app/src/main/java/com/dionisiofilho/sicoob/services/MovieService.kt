@@ -25,4 +25,9 @@ class MovieService {
     fun getDetailMovie(idMovie: Int, basePresenterCallback: BasePresenterCallback<Movie>) {
         getInstanceConnection().getDetailMovie(idMovie, apiKey, language).enqueue(ServiceCallback<Movie>().build(basePresenterCallback))
     }
+
+    fun searchMovie(page: Int = 1, search: String, basePresenterCallback: BasePresenterCallback<MovieResponse>) {
+        getInstanceConnection().searchMovie(apiKey, search, page).enqueue(ServiceCallback<MovieResponse>().build(basePresenterCallback))
+    }
+
 }

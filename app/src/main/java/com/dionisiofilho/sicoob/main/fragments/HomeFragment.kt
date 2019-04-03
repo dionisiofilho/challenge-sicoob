@@ -3,34 +3,28 @@ package com.dionisiofilho.sicoob.main.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.support.v4.view.ViewPager
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.dionisiofilho.sicoob.R
 import com.dionisiofilho.sicoob.adapters.MovieAdapter
-import com.dionisiofilho.sicoob.adapters.SlideAdapter
 import com.dionisiofilho.sicoob.application.bases.BaseFragment
 import com.dionisiofilho.sicoob.interfaces.IMovie
 import com.dionisiofilho.sicoob.model.Movie
 import com.dionisiofilho.sicoob.moviedetail.MovieDetailActivity
 import com.dionisiofilho.sicoob.presenters.MoviePresenter
-import java.util.*
 
 class HomeFragment : BaseFragment(), IMovie {
 
     private var loading: Boolean = true
-    private lateinit var viewPagerMain: ViewPager
+    private lateinit var searchView: SearchView
     private lateinit var recyclerViewMovie: RecyclerView
 
     private var page: Int = 1
 
-    private val slideAdapter: SlideAdapter by lazy {
-        SlideAdapter(fragmentManager)
-    }
 
     private val movieAdapter: MovieAdapter by lazy {
         MovieAdapter { onClickMovieAdapter(it) }
@@ -48,13 +42,31 @@ class HomeFragment : BaseFragment(), IMovie {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         configureListMovie()
+        configureSearchView()
         getMovies()
+    }
+
+    private fun configureSearchView() {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { search ->
+                    moviePresenter.searchMovie(search = search)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
     }
 
 
     private fun initViews() {
         view?.let {
             recyclerViewMovie = it.findViewById(R.id.rv_main_movies)
+            searchView = it.findViewById(R.id.sv_movie)
         }
     }
 
@@ -94,47 +106,16 @@ class HomeFragment : BaseFragment(), IMovie {
         startActivityWithAnimation(intentDetail)
     }
 
-    private fun convigureViewPager() {
 
-        val urlImage = "http://api-hom.contactcloud.dionisiofilho.com/images/icon_new.png"
-
-        slideAdapter.addUrl(urlImage)
-        slideAdapter.addUrl(urlImage)
-        slideAdapter.addUrl(urlImage)
-        slideAdapter.addUrl(urlImage)
-        slideAdapter.addUrl(urlImage)
-
-        viewPagerMain.adapter = slideAdapter
-
-        var currentPage = 0
-        val handler = Handler()
-
-        val runnable = Runnable {
-            if (currentPage == slideAdapter.count) {
-                currentPage = 0
-            }
-            viewPagerMain.setCurrentItem(currentPage++, true)
-        }
-
-        Timer().apply {
-            schedule(object : TimerTask() {
-                override fun run() {
-                    handler.post(runnable)
-                }
-
-            }, 3000, 3000)
-        }
+    override fun onSuccessSearchMovie(movies: List<Movie>) {
+        movieAdapter.addMovies(movies)
     }
-
 
     override fun onSuccesGetMovie(movies: List<Movie>) {
         movieAdapter.addMovies(movies, page == 1)
+
         loading = !(movies.isEmpty() && this.page != 0)
         this.page++
-    }
-
-    private fun clearList() {
-        movieAdapter.clear()
     }
 
     override fun onSuccessGetDetailsMovie(movie: Movie) {

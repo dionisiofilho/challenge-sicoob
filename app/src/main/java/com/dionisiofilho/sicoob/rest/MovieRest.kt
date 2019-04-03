@@ -15,4 +15,6 @@ interface MovieRest {
     @GET("{id}")
     fun getDetailMovie(@Path("id") idMovie: Int, @Query("api_key") apiKey: String, @Query("language") language: String): Call<Movie>
 
+    @GET("/3/search/movie")
+    fun searchMovie(@Query("api_key") apiKey: String, @Query("query") search: String, @Query("page") page: Int): Call<MovieResponse>
 }

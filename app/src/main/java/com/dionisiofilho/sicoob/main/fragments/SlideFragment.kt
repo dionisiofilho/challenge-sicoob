@@ -6,6 +6,8 @@ import android.widget.ImageView
 import com.dionisiofilho.sicoob.R
 import com.dionisiofilho.sicoob.application.bases.BaseFragment
 import com.dionisiofilho.sicoob.application.helpers.ImageHelper
+import com.dionisiofilho.sicoob.enums.ImageSize
+import com.dionisiofilho.sicoob.model.Movie
 
 
 class SlideFragment : BaseFragment() {
@@ -14,13 +16,13 @@ class SlideFragment : BaseFragment() {
 
     companion object {
 
-        private const val URL = "url"
+        private const val MOVIE = "movieSlide"
 
         @JvmStatic
-        fun newInstance(urlImage: String) =
+        fun newInstance(movie: Movie) =
                 SlideFragment().apply {
                     arguments = Bundle().apply {
-                        putString(URL, urlImage)
+                        putSerializable(MOVIE, movie)
                     }
                 }
     }
@@ -38,8 +40,8 @@ class SlideFragment : BaseFragment() {
 
     private fun argumentsFromBundle() {
         arguments?.let {
-            val url = it[URL] as String
-            ImageHelper.getImageFromImageView(url, imageSlide)
+            val movie = it[MOVIE] as Movie
+            ImageHelper.getImageFromMovie(movie.posterPath!!, imageSlide, ImageSize.W500)
 
         }
     }

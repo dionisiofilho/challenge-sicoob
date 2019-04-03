@@ -80,4 +80,18 @@ class MoviePresenter(ctx: Context, view: IMovie) : BasePresenter<IMovie>(ctx, vi
         }
     }
 
+    fun searchMovie(page: Int = 1, search: String) {
+
+        movieService.searchMovie(page, search, object : BasePresenterCallback<MovieResponse>() {
+            override fun onSuccess(response: MovieResponse) {
+                getView().onSuccessSearchMovie(response.movies)
+            }
+
+            override fun onError(throwable: Throwable) {
+                throwable.message?.let { getView().showOnError(it) }
+            }
+        })
+
+    }
+
 }

@@ -7,4 +7,5 @@ interface IMovie : BaseView {
 
     fun onSuccesGetMovie(movies: List<Movie>)
     fun onSuccessGetDetailsMovie(movie: Movie)
+    fun onSuccessSearchMovie(movies: List<Movie>)
 }
