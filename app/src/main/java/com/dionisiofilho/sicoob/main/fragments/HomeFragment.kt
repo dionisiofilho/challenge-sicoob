@@ -136,7 +136,7 @@ class HomeFragment : BaseFragment(), IMovie, SearchView.OnQueryTextListener {
         movieAdapter.addMovies(movies)
     }
 
-    override fun onSuccesGetMovie(movies: List<Movie>) {
+    override fun onSuccesGetMovie(movies: List<Movie>, page: Int) {
 
         swipeHome.dimiss()
 
@@ -149,7 +149,7 @@ class HomeFragment : BaseFragment(), IMovie, SearchView.OnQueryTextListener {
         movieAdapter.addMovies(movies, page == 1)
 
         loading = !(movies.isEmpty() && this.page != 0)
-        this.page++
+        this.page = page + 1
 
 
     }

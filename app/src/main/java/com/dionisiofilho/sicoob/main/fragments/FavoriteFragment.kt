@@ -87,7 +87,7 @@ class FavoriteFragment : BaseFragment(), IMovie {
         }
     }
 
-    override fun onSuccesGetMovie(movies: List<Movie>) {
+    override fun onSuccesGetMovie(movies: List<Movie>, page: Int) {
     }
 
     override fun onSuccessGetDetailsMovie(movie: Movie) {

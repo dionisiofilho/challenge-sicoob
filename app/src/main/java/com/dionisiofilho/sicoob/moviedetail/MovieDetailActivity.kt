@@ -17,7 +17,6 @@ import com.dionisiofilho.sicoob.application.bases.BaseActivity
 import com.dionisiofilho.sicoob.application.helpers.ImageHelper
 import com.dionisiofilho.sicoob.application.helpers.ResourcesHelper
 import com.dionisiofilho.sicoob.application.helpers.ToastHelper
-import com.dionisiofilho.sicoob.application.widgets.Loading
 import com.dionisiofilho.sicoob.enums.ImageSize
 import com.dionisiofilho.sicoob.extensions.formatHoursAndMinutes
 import com.dionisiofilho.sicoob.extensions.getDatePtBr
@@ -218,7 +217,7 @@ class MovieDetailActivity : BaseActivity(), IMovie {
         }
     }
 
-    override fun onSuccesGetMovie(movies: List<Movie>) {
+    override fun onSuccesGetMovie(movies: List<Movie>, page: Int) {
     }
 
     override fun onSuccessSearchMovie(movies: List<Movie>) {

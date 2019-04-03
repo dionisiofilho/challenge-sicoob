@@ -5,7 +5,7 @@ import com.dionisiofilho.sicoob.model.Movie
 
 interface IMovie : BaseView {
 
-    fun onSuccesGetMovie(movies: List<Movie>)
+    fun onSuccesGetMovie(movies: List<Movie>, page: Int)
     fun onSuccessGetDetailsMovie(movie: Movie)
     fun onSuccessSearchMovie(movies: List<Movie>)
 }
