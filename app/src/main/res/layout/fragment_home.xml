@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context="com.dionisiofilho.sicoob.main.fragments.HomeFragment">
 
     <android.support.design.widget.CoordinatorLayout
@@ -19,15 +20,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@color/colorPrimaryDark">
+            android:background="@color/colorPrimary">
 
             <android.support.v7.widget.SearchView
                 android:id="@+id/sv_movie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/dimen_8dp"
                 android:background="@drawable/background_searchview"
-                android:elevation="@dimen/dimen_2dp"
                 android:inputType="text"
                 app:iconifiedByDefault="false"
                 app:layout_scrollFlags="scroll|enterAlways"
@@ -44,5 +45,26 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_container_movie_is_empty_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_movie_is_empty"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_6dp"
+            android:text="@string/no_movie_show"
+            android:textAlignment="center"
+            android:textSize="@dimen/textsize_22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

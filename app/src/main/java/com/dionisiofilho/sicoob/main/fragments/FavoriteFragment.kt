@@ -3,6 +3,7 @@ package com.dionisiofilho.sicoob.main.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -11,6 +12,8 @@ import android.view.ViewGroup
 import com.dionisiofilho.sicoob.R
 import com.dionisiofilho.sicoob.adapters.MovieAdapter
 import com.dionisiofilho.sicoob.application.bases.BaseFragment
+import com.dionisiofilho.sicoob.extensions.gone
+import com.dionisiofilho.sicoob.extensions.visible
 import com.dionisiofilho.sicoob.interfaces.IMovie
 import com.dionisiofilho.sicoob.model.Movie
 import com.dionisiofilho.sicoob.moviedetail.MovieDetailActivity
@@ -20,7 +23,7 @@ import com.dionisiofilho.sicoob.presenters.MoviePresenter
 class FavoriteFragment : BaseFragment(), IMovie {
 
     private lateinit var moviesFavorites: RecyclerView
-
+    private lateinit var containerIsEmpty: ConstraintLayout
     private val favoriteAdapter: MovieAdapter by lazy {
         MovieAdapter { onClickMovie(it) }
     }
@@ -45,7 +48,18 @@ class FavoriteFragment : BaseFragment(), IMovie {
     }
 
     private fun loadMoviesFavorite() {
-        moviePresenter.getFavoriteMovies { movies -> favoriteAdapter.addMovies(movies) }
+
+
+        moviePresenter.getFavoriteMovies { movies ->
+            run {
+                favoriteAdapter.addMovies(movies)
+                if (movies.isEmpty()) {
+                    containerIsEmpty.visible()
+                } else {
+                    containerIsEmpty.gone()
+                }
+            }
+        }
     }
 
     private fun configureRecyclerView() {
@@ -56,6 +70,7 @@ class FavoriteFragment : BaseFragment(), IMovie {
 
     private fun initViews(view: View) {
         moviesFavorites = view.findViewById(R.id.rv_movies_favorites)
+        containerIsEmpty = view.findViewById(R.id.cl_container_movie_is_empty)
 
     }
 

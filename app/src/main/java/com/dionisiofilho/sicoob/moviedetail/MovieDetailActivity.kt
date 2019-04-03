@@ -77,11 +77,6 @@ class MovieDetailActivity : BaseActivity(), IMovie {
         configureAdapterGenre()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
 
     private fun getDetailMovie() {
 
@@ -135,12 +130,17 @@ class MovieDetailActivity : BaseActivity(), IMovie {
     private fun updateUI() {
         title.text = this.movie.title
         runtime.text = this.movie.runtime.formatHoursAndMinutes()
-        overview.text = this.movie.overview
         note.text = this.movie.voteAverage.toString()
         releaseDate.text = this.movie.releaseDate?.getDatePtBr() ?: ""
 
         this.movie.posterPath?.let {
             ImageHelper.getImageFromMovie(it, imageMovie, ImageSize.W342)
+        }
+
+        overview.text = if (this.movie.overview.isEmpty()) {
+            ResourcesHelper.getAppString(R.string.movie_not_contains_overview_or_translation)
+        } else {
+            this.movie.overview
         }
 
         genreAdapter.addAll(this.movie.genres)
@@ -177,22 +177,23 @@ class MovieDetailActivity : BaseActivity(), IMovie {
                 if (this.movie.isFavorite) {
                     moviePresenter.removeFavoriteDatabase(this.movie) { success ->
                         if (success) {
+                            this.movie.isFavorite = false
                             ToastHelper.showToastLong(R.string.favorite_delete_success)
                             item.icon = ResourcesHelper.getDrawable(R.drawable.ic_favorite_border)
                         } else {
                             ToastHelper.showToastLong(R.string.favorite_fail)
                         }
-                        this.movie.isFavorite = success
+
                     }
                 } else {
                     moviePresenter.setFavoriteMovie(this.movie) { success ->
                         if (success) {
+                            this.movie.isFavorite = true
                             ToastHelper.showToastLong(R.string.favorite_success)
                             item.icon = ResourcesHelper.getDrawable(R.drawable.ic_favorite_full)
                         } else {
                             ToastHelper.showToastLong(R.string.favorite_fail)
                         }
-                        this.movie.isFavorite = success
                     }
 
                 }
@@ -227,7 +228,7 @@ class MovieDetailActivity : BaseActivity(), IMovie {
     override fun onSuccessSearchMovie(movies: List<Movie>) {
 
     }
-    
+
     override fun onSuccessGetDetailsMovie(movie: Movie) {
         this.movie = movie
         loading.hide()

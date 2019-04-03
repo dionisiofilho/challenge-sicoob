@@ -3,25 +3,31 @@ package com.dionisiofilho.sicoob.main.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.dionisiofilho.sicoob.R
 import com.dionisiofilho.sicoob.adapters.MovieAdapter
 import com.dionisiofilho.sicoob.application.bases.BaseFragment
+import com.dionisiofilho.sicoob.extensions.gone
+import com.dionisiofilho.sicoob.extensions.visible
 import com.dionisiofilho.sicoob.interfaces.IMovie
 import com.dionisiofilho.sicoob.model.Movie
 import com.dionisiofilho.sicoob.moviedetail.MovieDetailActivity
 import com.dionisiofilho.sicoob.presenters.MoviePresenter
 
-class HomeFragment : BaseFragment(), IMovie {
+class HomeFragment : BaseFragment(), IMovie, SearchView.OnQueryTextListener {
+
 
     private var loading: Boolean = true
     private lateinit var searchView: SearchView
     private lateinit var recyclerViewMovie: RecyclerView
+    private lateinit var containerMovieIsEmpty: ConstraintLayout
 
     private var page: Int = 1
 
@@ -46,20 +52,22 @@ class HomeFragment : BaseFragment(), IMovie {
         getMovies()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+
+    }
+
     private fun configureSearchView() {
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { search ->
-                    moviePresenter.searchMovie(search = search)
-                }
-                return true
-            }
+        searchView.setOnQueryTextListener(this)
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+        searchView.findViewById<ImageView>(R.id.search_close_btn)?.apply {
+            setOnClickListener {
+                searchView.setQuery("", false)
+                page = 1
+                getMovies()
             }
-
-        })
+        }
     }
 
 
@@ -67,6 +75,7 @@ class HomeFragment : BaseFragment(), IMovie {
         view?.let {
             recyclerViewMovie = it.findViewById(R.id.rv_main_movies)
             searchView = it.findViewById(R.id.sv_movie)
+            containerMovieIsEmpty = it.findViewById(R.id.cl_container_movie_is_empty_home)
         }
     }
 
@@ -97,7 +106,13 @@ class HomeFragment : BaseFragment(), IMovie {
     }
 
     private fun getMovies() {
-        moviePresenter.getMovies(page)
+
+        if (searchView.query.isEmpty()) {
+            moviePresenter.getMovies(page)
+        } else {
+            moviePresenter.searchMovie(search = searchView.query.toString(), page = page)
+        }
+
     }
 
     private fun onClickMovieAdapter(movie: Movie) {
@@ -112,10 +127,29 @@ class HomeFragment : BaseFragment(), IMovie {
     }
 
     override fun onSuccesGetMovie(movies: List<Movie>) {
+
+        if (movies.isEmpty() && page == 1) {
+            containerMovieIsEmpty.visible()
+        } else {
+            containerMovieIsEmpty.gone()
+        }
+
         movieAdapter.addMovies(movies, page == 1)
 
         loading = !(movies.isEmpty() && this.page != 0)
         this.page++
+
+
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        page = 1
+        getMovies()
+        return false
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        return false
     }
 
     override fun onSuccessGetDetailsMovie(movie: Movie) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,8 +10,8 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/container_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dimen_200dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dimen_20dp"
         tools:context="com.dionisiofilho.sicoob.moviedetail.MovieDetailActivity">
 
         <include
@@ -57,11 +57,11 @@
             android:text="@string/title"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/textsize_24sp"
+            android:textSize="@dimen/textsize_22sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toRightOf="@+id/cv_detail_movie"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cv_detail_movie" />
+            app:layout_constraintTop_toBottomOf="@+id/inc_toolbar_detail" />
 
         <TextView
             android:id="@+id/tv_runtime_movie"
@@ -118,18 +118,20 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_label_release_date_movie" />
 
+
         <TextView
             android:id="@+id/tv_label_genre"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_10dp"
+            android:layout_marginTop="@dimen/dimen_50dp"
             android:padding="@dimen/dimen_6dp"
             android:text="@string/genre"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="@dimen/textsize_24sp"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cv_detail_movie" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_release_date_movie" />
 
 
         <android.support.v7.widget.RecyclerView
@@ -146,20 +148,22 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/cv_overview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="@dimen/dimen_0dp"
             android:layout_marginStart="@dimen/dimen_6dp"
             android:layout_marginTop="@dimen/dimen_10dp"
             android:layout_marginEnd="@dimen/dimen_6dp"
+            android:layout_marginBottom="@dimen/dimen_20dp"
             app:cardCornerRadius="@dimen/dimen_10dp"
             app:cardElevation="@dimen/dimen_6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lv_genre_movie">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_label_overview"
@@ -192,4 +196,4 @@
         </android.support.v7.widget.CardView>
     </android.support.constraint.ConstraintLayout>
 
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>
