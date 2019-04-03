@@ -6,9 +6,13 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.dionisiofilho.sicoob.application.helpers.AnimHelper
 import com.dionisiofilho.sicoob.application.helpers.ToastHelper
+import com.dionisiofilho.sicoob.application.widgets.Loading
 
 open class BaseActivity : AppCompatActivity(), BaseView {
 
+    val loading: Loading by lazy {
+        Loading(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,6 +20,7 @@ open class BaseActivity : AppCompatActivity(), BaseView {
     }
 
     override fun showOnError(error: String) {
+        loading.hide()
         ToastHelper.showToastLong(error)
     }
 

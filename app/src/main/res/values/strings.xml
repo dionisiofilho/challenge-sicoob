@@ -23,4 +23,5 @@
     <string name="movie_not_contains_overview_or_translation">O Título não tem sinopse ou tradução.</string>
     <string name="no_favorite_titles">Nenhum título favoritado</string>
     <string name="no_movie_show">Sem filmes !</string>
+    <string name="offline">Verifique sua conexão</string>
 </resources>

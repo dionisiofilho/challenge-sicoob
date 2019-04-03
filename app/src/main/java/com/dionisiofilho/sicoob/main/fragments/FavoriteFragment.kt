@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import com.dionisiofilho.sicoob.R
 import com.dionisiofilho.sicoob.adapters.MovieAdapter
 import com.dionisiofilho.sicoob.application.bases.BaseFragment
+import com.dionisiofilho.sicoob.application.helpers.NetworkHelper
+import com.dionisiofilho.sicoob.application.helpers.ToastHelper
 import com.dionisiofilho.sicoob.extensions.gone
 import com.dionisiofilho.sicoob.extensions.visible
 import com.dionisiofilho.sicoob.interfaces.IMovie
@@ -24,6 +26,7 @@ class FavoriteFragment : BaseFragment(), IMovie {
 
     private lateinit var moviesFavorites: RecyclerView
     private lateinit var containerIsEmpty: ConstraintLayout
+
     private val favoriteAdapter: MovieAdapter by lazy {
         MovieAdapter { onClickMovie(it) }
     }
@@ -75,9 +78,13 @@ class FavoriteFragment : BaseFragment(), IMovie {
     }
 
     private fun onClickMovie(movie: Movie) {
-        val intentDetail = Intent(requireContext(), MovieDetailActivity::class.java)
-        intentDetail.putExtra(MovieDetailActivity.IDMovie, movie.id)
-        startActivityWithAnimation(intentDetail)
+        if (NetworkHelper.isOnline()) {
+            val intentDetail = Intent(requireContext(), MovieDetailActivity::class.java)
+            intentDetail.putExtra(MovieDetailActivity.IDMovie, movie.id)
+            startActivityWithAnimation(intentDetail)
+        } else {
+            ToastHelper.showToastLong(R.string.offline)
+        }
     }
 
     override fun onSuccesGetMovie(movies: List<Movie>) {

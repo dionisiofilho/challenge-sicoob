@@ -1,6 +1,8 @@
 package com.dionisiofilho.sicoob.application.bases
 
 import com.dionisiofilho.sicoob.BuildConfig
+import com.dionisiofilho.sicoob.application.exceptions.NoInternetException
+import com.dionisiofilho.sicoob.application.helpers.NetworkHelper
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -26,6 +28,13 @@ class BaseConnectionService {
                 val interceptor = HttpLoggingInterceptor()
                 interceptor.level = HttpLoggingInterceptor.Level.BODY
                 client.addInterceptor(interceptor)
+            }
+
+            client.addInterceptor { chain ->
+                if (!NetworkHelper.isOnline()) {
+                    throw  NoInternetException()
+                }
+                return@addInterceptor chain.proceed(chain.request())
             }
 
             return Retrofit.Builder()

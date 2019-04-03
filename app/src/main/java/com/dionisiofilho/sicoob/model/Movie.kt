@@ -6,7 +6,7 @@ import android.arch.persistence.room.PrimaryKey
 import com.dionisiofilho.sicoob.application.bases.BaseModel
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.sql.Date
+import java.util.*
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -42,7 +42,7 @@ class Movie : BaseModel() {
 
     @JsonProperty("release_date")
     @Ignore
-    val releaseDate: Date? = null
+    var releaseDate: Date? = null
 
     @Ignore
     var isFavorite: Boolean = false

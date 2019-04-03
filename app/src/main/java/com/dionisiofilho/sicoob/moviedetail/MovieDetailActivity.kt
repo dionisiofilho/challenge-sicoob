@@ -58,10 +58,6 @@ class MovieDetailActivity : BaseActivity(), IMovie {
         GenreAdapter()
     }
 
-    private val loading: Loading by lazy {
-        Loading(this)
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

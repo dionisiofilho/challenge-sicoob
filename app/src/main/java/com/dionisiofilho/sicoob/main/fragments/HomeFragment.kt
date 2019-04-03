@@ -4,6 +4,7 @@ package com.dionisiofilho.sicoob.main.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
@@ -14,6 +15,8 @@ import android.widget.ImageView
 import com.dionisiofilho.sicoob.R
 import com.dionisiofilho.sicoob.adapters.MovieAdapter
 import com.dionisiofilho.sicoob.application.bases.BaseFragment
+import com.dionisiofilho.sicoob.application.helpers.NetworkHelper
+import com.dionisiofilho.sicoob.extensions.dimiss
 import com.dionisiofilho.sicoob.extensions.gone
 import com.dionisiofilho.sicoob.extensions.visible
 import com.dionisiofilho.sicoob.interfaces.IMovie
@@ -28,6 +31,8 @@ class HomeFragment : BaseFragment(), IMovie, SearchView.OnQueryTextListener {
     private lateinit var searchView: SearchView
     private lateinit var recyclerViewMovie: RecyclerView
     private lateinit var containerMovieIsEmpty: ConstraintLayout
+    private lateinit var containerOffline: ConstraintLayout
+    private lateinit var swipeHome: SwipeRefreshLayout
 
     private var page: Int = 1
 
@@ -49,13 +54,16 @@ class HomeFragment : BaseFragment(), IMovie, SearchView.OnQueryTextListener {
         initViews()
         configureListMovie()
         configureSearchView()
+        configureSwipe()
         getMovies()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-
+    private fun configureSwipe() {
+        swipeHome.setOnRefreshListener {
+            containerOffline.gone()
+            page = 1
+            getMovies()
+        }
     }
 
     private fun configureSearchView() {
@@ -76,6 +84,8 @@ class HomeFragment : BaseFragment(), IMovie, SearchView.OnQueryTextListener {
             recyclerViewMovie = it.findViewById(R.id.rv_main_movies)
             searchView = it.findViewById(R.id.sv_movie)
             containerMovieIsEmpty = it.findViewById(R.id.cl_container_movie_is_empty_home)
+            containerOffline = it.findViewById(R.id.cl_container_offline_home)
+            swipeHome = it.findViewById(R.id.sw_home)
         }
     }
 
@@ -128,6 +138,8 @@ class HomeFragment : BaseFragment(), IMovie, SearchView.OnQueryTextListener {
 
     override fun onSuccesGetMovie(movies: List<Movie>) {
 
+        swipeHome.dimiss()
+
         if (movies.isEmpty() && page == 1) {
             containerMovieIsEmpty.visible()
         } else {
@@ -150,6 +162,17 @@ class HomeFragment : BaseFragment(), IMovie, SearchView.OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String?): Boolean {
         return false
+    }
+
+    override fun showOnError(error: String) {
+        super.showOnError(error)
+        swipeHome.dimiss()
+        if (NetworkHelper.isOnline()) {
+            containerOffline.gone()
+        } else if (movieAdapter.itemCount == 0) {
+            containerOffline.visible()
+        }
+
     }
 
     override fun onSuccessGetDetailsMovie(movie: Movie) {
