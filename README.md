@@ -5,8 +5,8 @@ Um aplicativo de catálogo de filmes populares que possibilia busca pelo nome, f
 
 API utilizada foi : [The MovieDB](https://www.themoviedb.org/documentation/api)
 
+<img src="https://i.imgur.com/B1AV3wC.jpg" alt="Home" width="350" height="550">
 
-<img src="https://i.imgur.com/HzhrbDH.jpg" alt="Home" width="350" height="550">
 
 ### Features
 
