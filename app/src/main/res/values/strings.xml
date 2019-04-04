@@ -1,7 +1,5 @@
 <resources>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
     <string name="favorite">Favoritos</string>
     <string name="error_service">Não foi possível carregar a sua solicitação</string>
@@ -20,8 +18,8 @@
     <string name="favorite_fail">Não foi possível completar a solicitação</string>
     <string name="favorite_delete_success">Removido dos favoritos</string>
     <string name="search">Pesquisar</string>
-    <string name="movie_not_contains_overview_or_translation">O Título não tem sinopse ou tradução.</string>
-    <string name="no_favorite_titles">Nenhum título favoritado</string>
+    <string name="movie_not_contains_overview_or_translation">O filme não tem sinopse ou tradução.</string>
+    <string name="no_favorite_titles">Nenhum filme favoritado</string>
     <string name="no_movie_show">Sem filmes !</string>
     <string name="offline">Verifique sua conexão</string>
 </resources>
