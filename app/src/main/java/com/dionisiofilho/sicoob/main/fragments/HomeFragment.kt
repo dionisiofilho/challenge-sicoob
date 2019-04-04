@@ -16,6 +16,7 @@ import com.dionisiofilho.sicoob.R
 import com.dionisiofilho.sicoob.adapters.MovieAdapter
 import com.dionisiofilho.sicoob.application.bases.BaseFragment
 import com.dionisiofilho.sicoob.application.helpers.NetworkHelper
+import com.dionisiofilho.sicoob.application.helpers.ToastHelper
 import com.dionisiofilho.sicoob.extensions.dimiss
 import com.dionisiofilho.sicoob.extensions.gone
 import com.dionisiofilho.sicoob.extensions.visible
@@ -126,9 +127,13 @@ class HomeFragment : BaseFragment(), IMovie, SearchView.OnQueryTextListener {
     }
 
     private fun onClickMovieAdapter(movie: Movie) {
-        val intentDetail = Intent(requireContext(), MovieDetailActivity::class.java)
-        intentDetail.putExtra(MovieDetailActivity.IDMovie, movie.id)
-        startActivityWithAnimation(intentDetail)
+        if (NetworkHelper.isOnline()) {
+            val intentDetail = Intent(requireContext(), MovieDetailActivity::class.java)
+            intentDetail.putExtra(MovieDetailActivity.IDMovie, movie.id)
+            startActivityWithAnimation(intentDetail)
+        } else {
+            ToastHelper.showToastLong(R.string.offline)
+        }
     }
 
 

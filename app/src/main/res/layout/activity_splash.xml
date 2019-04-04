@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/iv_splash"
-        android:layout_width="@dimen/dimen_100dp"
-        android:layout_height="@dimen/dimen_100dp"
+        android:layout_width="@dimen/dimen_80dp"
+        android:layout_height="@dimen/dimen_80dp"
         android:src="@drawable/ic_video_camera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -3,17 +3,17 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-def APP_NAME = "Sicoob"
+def APP_NAME = "AppMovie"
 def compat_version = "27.1.1"
 def retrofit_version = '2.3.0'
 def archRoomVersion = '1.1.1'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.dionisiofilho.sicoob"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -39,7 +39,7 @@ android {
     productFlavors {
         DEV {
             setApplicationIdSuffix(".dev")
-            resValue "string", "app_name", APP_NAME + " DEV"
+            resValue "string", "app_name", APP_NAME
             manifestPlaceholders = [applicationLabel: APP_NAME + " DEV"]
             buildConfigField "String", "ApiKey", "\"9dd8120f0d5021ea02e340492f2137f6\""
             buildConfigField "String", "BaseURLAPI", "\"https://api.themoviedb.org/3/movie/\""
